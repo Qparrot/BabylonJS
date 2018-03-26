@@ -156,6 +156,9 @@ Player.prototype =
 
 		// On demande à la caméra de regarder au point zéro de la scène
 		this.camera.setTarget(BABYLON.Vector3.Zero());
+		
+		// call the weapons creation
+		this.camera.weapons = new Weapons(this);
 	},
 };
 
