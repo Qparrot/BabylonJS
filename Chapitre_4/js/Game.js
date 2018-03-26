@@ -19,15 +19,19 @@ Game = function(canvasId)
 	var canvas = document.getElementById(canvasId);
 	var engine = new BABYLON.Engine(canvas,true);
 	var _this = this;
-
+	_this.actualTime=Date.now();
+	
 	// On initie la scène avec une fonction associé à l'object Game
 	this.scene = this._initScene(engine);
-	
+
+		
 	// Permet au jeu de tourner
 	var _player = new Player(_this, canvas);
 	var _arena = new Arena(_this);
 	engine.runRenderLoop(function ()
 	{
+		_this.fps = Math.round (1000 / engine.getDeltaTime());
+		_player._checkMove((_this.fps) / 60);
 		_this.scene.render();
 	});
 

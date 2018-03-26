@@ -6,6 +6,7 @@ Player = function(game, canvas)
 	// Le jeu, chargé dans l'objet Player
 	this.game = game;
 	_this.angularSensibility = 500;
+	this.speed = 5;
 
 	// Axe de mouvement X et Z
 	this.axisMovement = [false,false,false,false];
@@ -74,6 +75,39 @@ Player = function(game, canvas)
 
 Player.prototype =
 {
+	_checkMove : function (ratioFps)
+	{
+		let relativeSpeed = this.speed / ratioFps;
+		if (this.camera.axisMovement[0])
+		{
+			this.camera.position = new BABYLON.Vector3(this.camera.position.x 
+			+ (Math.sin(this.camera.rotation.y) * relativeSpeed),
+			this.camera.position.y,
+			this.camera.position.z + (Math.cos(this.camera.rotation.y) * relativeSpeed));
+		}
+		if (this.camera.axisMovement[1])
+		{
+			this.camera.position = new BABYLON.Vector3(this.camera.position.x + (Math.sin(this.camera.rotation.y) * -relativeSpeed), this.camera.position.y,
+			this.camera.position.z + (Math.cos(this.camera.rotation.y) * -relativeSpeed));
+		}
+		if (this.camera.axisMovement[2])
+		{
+			this.camera.position = new BABYLON.Vector3(this.camera.position.x + Math.sin(this.camera.rotation.y + degToRad(-90)) * relativeSpeed, this.camera.position.y,
+			this.camera.position.z + Math.cos(this.camera.rotation.y + degToRad(-90)) * relativeSpeed);
+		}
+		if (this.camera.axisMovement[3])
+		{
+			this.camera.position = new BABYLON.Vector3(this.camera.position.x + Math.sin(this.camera.rotation.y + degToRad(-90)) * -relativeSpeed, this.camera.position.y,
+			this.camera.position.z + Math.cos(this.camera.rotation.y + degToRad(-90)) * -relativeSpeed);
+		}
+	},
+				
+				
+				
+
+
+
+
 	_initPointerLock : function()
 	{
 		var _this = this;
